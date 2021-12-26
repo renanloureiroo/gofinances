@@ -13,19 +13,28 @@ import {
 
 interface TransactionProps {
   type: "deposit" | "withdraw"
+  title: string
+  amount: string
+  category: string
+  date: string
 }
 
-export const Transaction = () => {
+export const TransactionCard = ({
+  title,
+  amount,
+  category,
+  date,
+}: TransactionProps) => {
   return (
     <Container>
-      <Title>Desenvolvimento de site</Title>
-      <Amount>R$ 12.000,00</Amount>
+      <Title>{title}</Title>
+      <Amount>{amount}</Amount>
       <Footer>
         <CategoryContainer>
           <Icon name="coffee" />
-          <Category>Vendas</Category>
+          <Category>{category}</Category>
         </CategoryContainer>
-        <Date>13/04/2021</Date>
+        <Date>{date}</Date>
       </Footer>
     </Container>
   )

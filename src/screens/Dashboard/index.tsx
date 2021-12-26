@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import Power from "@expo/vector-icons/Feather"
 
@@ -13,12 +13,48 @@ import {
   UserName,
   Icon,
   HighlightCards,
+  Transactions,
+  Title,
+  TransactionsContainer,
 } from "./styles"
 import theme from "../../global/styles/theme"
 import { HighlightCard } from "../../components/HighlightCard"
-import { Transaction } from "../../components/Transaction"
+import { TransactionCard } from "../../components/TransactionCard"
+
+interface Transaction {
+  id: string
+  type: "deposit" | "withdraw"
+  title: string
+  amount: string
+  category: string
+  date: string
+}
+
+const fake: Transaction[] = [
+  {
+    id: "1",
+    type: "deposit",
+    title: "Desenvolvimento de site",
+    amount: "R$ 12.000,00",
+
+    category: "Vendas",
+
+    date: "13/04/2021",
+  },
+  {
+    id: "2",
+    type: "withdraw",
+    title: "Desenvolvimento de site",
+    amount: "R$ 3.000,00",
+
+    category: "Alimentação",
+
+    date: "13/04/2021",
+  },
+]
 
 export const Dashboard = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>(fake)
   return (
     <Container>
       <Header>
@@ -55,7 +91,17 @@ export const Dashboard = () => {
         />
       </HighlightCards>
 
-      <Transaction />
+      <Transactions>
+        <Title>Listagem</Title>
+
+        <TransactionCard
+          type="deposit"
+          title="Desenvolvimento de site"
+          amount="R$ 12.000,00"
+          category="Vendas"
+          date="13/04/2021"
+        />
+      </Transactions>
     </Container>
   )
 }

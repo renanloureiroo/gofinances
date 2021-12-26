@@ -5,11 +5,10 @@ import { RFValue } from "react-native-responsive-fontsize"
 
 export const Container = styled.View`
   width: 100%;
-  padding: 24px;
-  height: ${RFValue(128)}px;
+  padding: 17px 24px;
   background: ${({ theme }) => theme.colors.shape};
   border-radius: ${RFValue(5)}px;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 export const Title = styled.Text`
@@ -25,6 +24,7 @@ export const Amount = styled.Text`
 `
 
 export const Footer = styled.View`
+  margin-top: 19px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
