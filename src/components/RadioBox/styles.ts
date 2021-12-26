@@ -18,8 +18,6 @@ export const Container = styled(TouchableOpacity)<TypeProps>`
   padding: 16px 36px;
 
   border-radius: ${RFValue(5)}px;
-  margin-top: 8px;
-  margin-bottom: 16px;
 
   ${({ theme, type, isActive }) =>
     type === "deposit"

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Button } from "../../components/Button"
+import { CategorySelect } from "../../components/CategorySelect"
 import { Input } from "../../components/Forms/Input"
 import { RadioBox } from "../../components/RadioBox"
 import {
@@ -42,6 +43,8 @@ export const Register = () => {
               onPress={handleWithDraw}
             />
           </RadioContainer>
+
+          <CategorySelect />
         </Fields>
 
         <Button title="Cadastrar" />
