@@ -16,6 +16,7 @@ import {
 } from "./styles"
 import theme from "../../global/styles/theme"
 import { HighlightCard } from "../../components/HighlightCard"
+import { Transaction } from "../../components/Transaction"
 
 export const Dashboard = () => {
   return (
@@ -34,10 +35,27 @@ export const Dashboard = () => {
       </Header>
 
       <HighlightCards>
-        <HighlightCard />
-        <HighlightCard />
-        <HighlightCard />
+        <HighlightCard
+          type="up"
+          title="Entradas"
+          lastTransaction="Última entrada dia 13 de abril"
+          amount="R$ 17.400,00"
+        />
+        <HighlightCard
+          type="down"
+          title="Saídas"
+          lastTransaction="Última entrada dia 13 de abril"
+          amount="R$ 17.400,00"
+        />
+        <HighlightCard
+          type="total"
+          title="Total"
+          lastTransaction="Última entrada dia 13 de abril"
+          amount="R$ 17.400,00"
+        />
       </HighlightCards>
+
+      <Transaction />
     </Container>
   )
 }
