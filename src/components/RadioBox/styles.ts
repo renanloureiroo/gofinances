@@ -25,11 +25,13 @@ export const Container = styled(TouchableOpacity)<TypeProps>`
     type === "deposit"
       ? css`
           background: ${isActive ? theme.colors.success_light : "transparent"};
+          ${isActive && "border: none;"}
         `
       : css`
           background: ${isActive
             ? theme.colors.attention_light
             : "transparent"};
+          ${isActive && "border: none;"}
         `}
 `
 
@@ -43,4 +45,5 @@ export const Icon = styled(Feather)<TypeProps>`
 export const Title = styled.Text`
   font-size: ${RFValue(14)}px;
   color: ${({ theme }) => theme.colors.title};
+  font-family: ${({ theme }) => theme.fonts.regular};
 `

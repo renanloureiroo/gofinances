@@ -23,7 +23,10 @@ export const Title = styled.Text`
 export const Form = styled.View`
   padding: 24px;
   flex: 1;
+  justify-content: space-between;
 `
+
+export const Fields = styled.View``
 
 export const RadioContainer = styled.View`
   flex-direction: row;

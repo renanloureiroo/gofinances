@@ -11,6 +11,7 @@ export const Container = styled(TouchableOpacity)`
   padding: 17px;
 
   border-radius: ${RFValue(5)}px;
+  margin-bottom: 17px;
 `
 
 export const Title = styled.Text`
