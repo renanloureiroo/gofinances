@@ -1,7 +1,11 @@
 import React from "react"
 import { Category, Container, Icon, Title } from "./styles"
 
-export const CategorySelect = () => {
+interface Props {
+  category: string
+}
+
+export const CategorySelect = ({ category }: Props) => {
   return (
     <Container>
       <Category>
