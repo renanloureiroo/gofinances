@@ -24,3 +24,9 @@ export const Form = styled.View`
   padding: 24px;
   flex: 1;
 `
+
+export const RadioContainer = styled.View`
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+`
