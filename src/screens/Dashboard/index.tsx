@@ -1,6 +1,4 @@
-import React, { useState } from "react"
-
-import Power from "@expo/vector-icons/Feather"
+import React from "react"
 
 import {
   Container,
@@ -15,46 +13,56 @@ import {
   HighlightCards,
   Transactions,
   Title,
-  TransactionsContainer,
+  TransactionList,
 } from "./styles"
-import theme from "../../global/styles/theme"
-import { HighlightCard } from "../../components/HighlightCard"
-import { TransactionCard } from "../../components/TransactionCard"
 
-interface Transaction {
+import { HighlightCard } from "../../components/HighlightCard"
+import {
+  TransactionCard,
+  TransactionCardData,
+} from "../../components/TransactionCard"
+
+export interface DataListListProps extends TransactionCardData {
   id: string
-  type: "deposit" | "withdraw"
-  title: string
-  amount: string
-  category: string
-  date: string
 }
 
-const fake: Transaction[] = [
-  {
-    id: "1",
-    type: "deposit",
-    title: "Desenvolvimento de site",
-    amount: "R$ 12.000,00",
-
-    category: "Vendas",
-
-    date: "13/04/2021",
-  },
-  {
-    id: "2",
-    type: "withdraw",
-    title: "Desenvolvimento de site",
-    amount: "R$ 3.000,00",
-
-    category: "Alimentação",
-
-    date: "13/04/2021",
-  },
-]
-
 export const Dashboard = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>(fake)
+  const DATA: DataListListProps[] = [
+    {
+      id: "1",
+      type: "deposit",
+      title: "Desenvolvimento de site",
+      amount: "R$ 12.000,00",
+      category: {
+        name: "Vendas",
+        icon: "coffee",
+      },
+      date: "13/04/2021",
+    },
+    {
+      id: "2",
+      type: "withdraw",
+      title: "Mercado",
+      amount: "R$ 2.000,00",
+      category: {
+        name: "Alimentação",
+        icon: "coffee",
+      },
+      date: "13/04/2021",
+    },
+    {
+      id: "2",
+      type: "withdraw",
+      title: "Fones de ouvido",
+      amount: "R$ 1.000,00",
+      category: {
+        name: "Equipamento",
+        icon: "coffee",
+      },
+      date: "13/04/2021",
+    },
+  ]
+
   return (
     <Container>
       <Header>
@@ -94,12 +102,10 @@ export const Dashboard = () => {
       <Transactions>
         <Title>Listagem</Title>
 
-        <TransactionCard
-          type="deposit"
-          title="Desenvolvimento de site"
-          amount="R$ 12.000,00"
-          category="Vendas"
-          date="13/04/2021"
+        <TransactionList
+          data={DATA}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <TransactionCard data={item} />}
         />
       </Transactions>
     </Container>

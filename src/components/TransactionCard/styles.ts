@@ -3,12 +3,18 @@ import styled from "styled-components/native"
 import { Feather } from "@expo/vector-icons"
 import { RFValue } from "react-native-responsive-fontsize"
 
+interface AmountProps {
+  type: "deposit" | "withdraw"
+}
+
 export const Container = styled.View`
   width: 100%;
   padding: 17px 24px;
   background: ${({ theme }) => theme.colors.shape};
   border-radius: ${RFValue(5)}px;
   justify-content: center;
+
+  margin-bottom: 16px;
 `
 
 export const Title = styled.Text`
@@ -17,8 +23,9 @@ export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
 `
 
-export const Amount = styled.Text`
-  color: ${({ theme }) => theme.colors.success};
+export const Amount = styled.Text<AmountProps>`
+  color: ${({ theme, type }) =>
+    type === "deposit" ? theme.colors.success : theme.colors.attention};
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `

@@ -11,30 +11,35 @@ import {
   CategoryContainer,
 } from "./styles"
 
-interface TransactionProps {
+interface CategoryProps {
+  name: string
+  icon: string
+}
+export interface TransactionCardData {
   type: "deposit" | "withdraw"
   title: string
   amount: string
-  category: string
+  category: CategoryProps
   date: string
 }
 
-export const TransactionCard = ({
-  title,
-  amount,
-  category,
-  date,
-}: TransactionProps) => {
+interface Props {
+  data: TransactionCardData
+}
+
+export const TransactionCard = ({ data }: Props) => {
   return (
     <Container>
-      <Title>{title}</Title>
-      <Amount>{amount}</Amount>
+      <Title>{data.title}</Title>
+      <Amount type={data.type}>
+        {data.type === "deposit" ? data.amount : "-" + data.amount}
+      </Amount>
       <Footer>
         <CategoryContainer>
-          <Icon name="coffee" />
-          <Category>{category}</Category>
+          <Icon name={data.category.icon} />
+          <Category>{data.category.name}</Category>
         </CategoryContainer>
-        <Date>{date}</Date>
+        <Date>{data.date}</Date>
       </Footer>
     </Container>
   )
