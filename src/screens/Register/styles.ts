@@ -3,6 +3,7 @@ import styled from "styled-components/native"
 
 export const Container = styled.View`
   flex: 1;
+  background: ${({ theme }) => theme.colors.background};
 `
 
 export const Header = styled.View`
@@ -17,4 +18,9 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.regular};
   margin-bottom: 19px;
+`
+
+export const Form = styled.View`
+  padding: 24px;
+  flex: 1;
 `
