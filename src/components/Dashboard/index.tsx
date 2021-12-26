@@ -1,12 +1,11 @@
 import React from "react"
-import { Text, View } from "react-native"
 
-import { Container } from "./styles"
+import { Container, Title } from "./styles"
 
 export const Dashboard = () => {
   return (
     <Container>
-      <Text>Dashboard</Text>
+      <Title>Dashboard</Title>
     </Container>
   )
 }
