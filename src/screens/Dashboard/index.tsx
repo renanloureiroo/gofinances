@@ -12,8 +12,10 @@ import {
   UserInfo,
   UserName,
   Icon,
+  HighlightCards,
 } from "./styles"
 import theme from "../../global/styles/theme"
+import { HighlightCard } from "../../components/HighlightCard"
 
 export const Dashboard = () => {
   return (
@@ -30,6 +32,12 @@ export const Dashboard = () => {
           <Icon name="power" />
         </UserWrapper>
       </Header>
+
+      <HighlightCards>
+        <HighlightCard />
+        <HighlightCard />
+        <HighlightCard />
+      </HighlightCards>
     </Container>
   )
 }
