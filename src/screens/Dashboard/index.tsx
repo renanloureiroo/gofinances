@@ -35,7 +35,7 @@ export const Dashboard = () => {
       amount: "R$ 12.000,00",
       category: {
         name: "Vendas",
-        icon: "coffee",
+        icon: "dollar-sign",
       },
       date: "13/04/2021",
     },
@@ -51,13 +51,13 @@ export const Dashboard = () => {
       date: "13/04/2021",
     },
     {
-      id: "2",
+      id: "3",
       type: "withdraw",
       title: "Fones de ouvido",
       amount: "R$ 1.000,00",
       category: {
         name: "Equipamento",
-        icon: "coffee",
+        icon: "headphones",
       },
       date: "13/04/2021",
     },
