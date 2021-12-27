@@ -12,7 +12,7 @@ import {
 } from "./styles"
 
 import { categories } from "../../utils/categories"
-import { Button } from "../../components/Button"
+import { Button } from "../../components/Forms/Button"
 
 interface Category {
   key: string
@@ -20,7 +20,7 @@ interface Category {
 }
 
 interface Props {
-  category: string
+  category: Category
   setCategory: (category: Category) => void
   closeSelectCategory: () => void
 }
@@ -33,14 +33,16 @@ export const CategorySelect = ({
   return (
     <Container>
       <Header>
-        <Title>Categoria</Title>
+        <Title>{category.name}</Title>
       </Header>
 
       <FlatList
         data={categories}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            onPress={() => setCategory({ key: item.key, name: item.name })}
+          >
             <Icon name={item.icon} />
 
             <Name>{item.name}</Name>
@@ -49,7 +51,7 @@ export const CategorySelect = ({
         ItemSeparatorComponent={() => <Separator />}
       />
       <ContainerContent>
-        <Button title="Selecionar" />
+        <Button title="Selecionar" onPress={closeSelectCategory} />
       </ContainerContent>
     </Container>
   )
