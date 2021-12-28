@@ -1,8 +1,10 @@
 import React, { useState } from "react"
 import { Modal } from "react-native"
+import { useForm } from "react-hook-form"
+
 import { Button } from "../../components/Forms/Button"
 import { CategorySelectButton } from "../../components/Forms/CategorySelectButton"
-import { Input } from "../../components/Forms/Input"
+import { InputForm } from "../../components/Forms/inputForm"
 import { RadioBox } from "../../components/RadioBox"
 import { CategorySelect } from "../CategorySelect"
 import {
@@ -19,6 +21,11 @@ interface CategoryProps {
   name: string
 }
 
+interface FormData {
+  name: string
+  amount: string
+}
+
 export const Register = () => {
   const [selected, setSelected] = useState<"deposit" | "withdraw">("withdraw")
   const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false)
@@ -27,6 +34,12 @@ export const Register = () => {
     key: "category",
     name: "Category",
   })
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
 
   const handleSelectCategory = ({ key, name }: CategoryProps) => {
     setCategory({ key, name })
@@ -46,6 +59,16 @@ export const Register = () => {
   const handleWithDraw = () => {
     setSelected("withdraw")
   }
+
+  const handleRegister = (form: FormData) => {
+    const data = {
+      name: form.name,
+      amount: form.amount,
+      type: selected,
+      category: category.key,
+    }
+    console.log(data)
+  }
   return (
     <Container>
       <Header>
@@ -53,8 +76,8 @@ export const Register = () => {
       </Header>
       <Form>
         <Fields>
-          <Input placeholder="Nome" />
-          <Input placeholder="Valor" />
+          <InputForm placeholder="Nome" control={control} name="name" />
+          <InputForm placeholder="Valor" name="amount" control={control} />
 
           <RadioContainer>
             <RadioBox
@@ -75,7 +98,7 @@ export const Register = () => {
           />
         </Fields>
 
-        <Button title="Cadastrar" onPress={() => {}} />
+        <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
       </Form>
 
       <Modal visible={categoryModalOpen}>
