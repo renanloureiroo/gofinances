@@ -1,10 +1,12 @@
-import React, { useState } from "react"
-import { Modal, TouchableWithoutFeedback, Keyboard } from "react-native"
+import React, { useEffect, useState } from "react"
+import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 import { useForm } from "react-hook-form"
+
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { Button } from "../../components/Forms/Button"
 import { CategorySelectButton } from "../../components/Forms/CategorySelectButton"
@@ -49,6 +51,7 @@ export const Register = () => {
     name: "Category",
   })
 
+  const dataKey = "@gofinances:transactions"
   const {
     control,
     handleSubmit,
@@ -76,15 +79,35 @@ export const Register = () => {
     setSelected("withdraw")
   }
 
-  const handleRegister = (form: FormData) => {
+  const handleRegister = async (form: FormData) => {
+    if (category.key === "category") {
+      Alert.alert("Selecione uma categoria")
+    }
+
     const data = {
       name: form.name,
       amount: form.amount,
       type: selected,
       category: category.key,
     }
-    console.log(data)
+
+    try {
+      await AsyncStorage.setItem(dataKey, JSON.stringify(data))
+    } catch (err) {
+      console.error("screen:Register\nmetódo:HandleRegister\nerror", err)
+      Alert.alert("Não foi possível salvar")
+    }
   }
+
+  useEffect(() => {
+    const getTransactions = async () => {
+      const data = await AsyncStorage.getItem("@gofinances:transactions")
+
+      console.log(JSON.parse(data!))
+    }
+    getTransactions()
+  }, [])
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
