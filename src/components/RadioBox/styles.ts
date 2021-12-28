@@ -1,22 +1,17 @@
-import { TouchableOpacity } from "react-native"
 import styled, { css } from "styled-components/native"
 
 import { Feather } from "@expo/vector-icons"
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
+import { RFValue } from "react-native-responsive-fontsize"
+import { RectButton } from "react-native-gesture-handler"
 
 interface TypeProps {
   type: "deposit" | "withdraw"
   isActive: boolean
 }
 
-export const Container = styled(TouchableOpacity)<TypeProps>`
-  flex-direction: row;
+export const Container = styled.View<TypeProps>`
   border: 1px solid ${({ theme }) => theme.colors.text};
-  justify-content: center;
-  align-items: center;
   max-width: 49%;
-  padding: 16px 36px;
-
   border-radius: ${RFValue(5)}px;
 
   ${({ theme, type, isActive }) =>
@@ -31,6 +26,13 @@ export const Container = styled(TouchableOpacity)<TypeProps>`
             : "transparent"};
           ${isActive && "border: none;"}
         `}
+`
+
+export const Button = styled(RectButton)`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 36px;
 `
 
 export const Icon = styled(Feather)<TypeProps>`
