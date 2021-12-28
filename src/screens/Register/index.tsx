@@ -1,5 +1,9 @@
 import React, { useState } from "react"
-import { Modal } from "react-native"
+import { Modal, TouchableWithoutFeedback, Keyboard } from "react-native"
+
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
 import { useForm } from "react-hook-form"
 
 import { Button } from "../../components/Forms/Button"
@@ -26,6 +30,16 @@ interface FormData {
   amount: string
 }
 
+const schema = yup.object({
+  name: yup.string().required("Nome é obrigatório"),
+
+  amount: yup
+    .number()
+    .typeError("Informe um valor numérico")
+    .positive("O valor não pode ser negativo")
+    .required("Valor é obrigatório"),
+})
+
 export const Register = () => {
   const [selected, setSelected] = useState<"deposit" | "withdraw">("withdraw")
   const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false)
@@ -39,7 +53,9 @@ export const Register = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
   const handleSelectCategory = ({ key, name }: CategoryProps) => {
     setCategory({ key, name })
@@ -70,44 +86,59 @@ export const Register = () => {
     console.log(data)
   }
   return (
-    <Container>
-      <Header>
-        <Title>Cadastro</Title>
-      </Header>
-      <Form>
-        <Fields>
-          <InputForm placeholder="Nome" control={control} name="name" />
-          <InputForm placeholder="Valor" name="amount" control={control} />
-
-          <RadioContainer>
-            <RadioBox
-              type="deposit"
-              isActive={selected === "deposit"}
-              onPress={handleDeposit}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <Header>
+          <Title>Cadastro</Title>
+        </Header>
+        <Form>
+          <Fields>
+            <InputForm
+              placeholder="Nome"
+              control={control}
+              name="name"
+              autoCapitalize="sentences"
+              autoCorrect={false}
+              error={errors.name && errors.name.message}
             />
-            <RadioBox
-              type="withdraw"
-              isActive={selected === "withdraw"}
-              onPress={handleWithDraw}
+            <InputForm
+              keyboardType="numeric"
+              placeholder="Valor"
+              name="amount"
+              control={control}
+              error={errors.amount && errors.amount.message}
             />
-          </RadioContainer>
 
-          <CategorySelectButton
-            title={category.name}
-            onPress={handleOpenModal}
+            <RadioContainer>
+              <RadioBox
+                type="deposit"
+                isActive={selected === "deposit"}
+                onPress={handleDeposit}
+              />
+              <RadioBox
+                type="withdraw"
+                isActive={selected === "withdraw"}
+                onPress={handleWithDraw}
+              />
+            </RadioContainer>
+
+            <CategorySelectButton
+              title={category.name}
+              onPress={handleOpenModal}
+            />
+          </Fields>
+
+          <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
+        </Form>
+
+        <Modal visible={categoryModalOpen}>
+          <CategorySelect
+            category={category}
+            setCategory={handleSelectCategory}
+            closeSelectCategory={handleCloseModal}
           />
-        </Fields>
-
-        <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
-      </Form>
-
-      <Modal visible={categoryModalOpen}>
-        <CategorySelect
-          category={category}
-          setCategory={handleSelectCategory}
-          closeSelectCategory={handleCloseModal}
-        />
-      </Modal>
-    </Container>
+        </Modal>
+      </Container>
+    </TouchableWithoutFeedback>
   )
 }
