@@ -8,6 +8,7 @@ import {
 } from "react-native-iphone-x-helper"
 
 import { DataListListProps } from "."
+
 export const Container = styled.View`
   flex: 1;
   background: ${({ theme }) => theme.colors.background};

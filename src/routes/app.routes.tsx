@@ -1,4 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { Platform } from "react-native"
+import { getBottomSpace } from "react-native-iphone-x-helper"
+
+import { MaterialIcons } from "@expo/vector-icons"
+
+import theme from "../global/styles/theme"
 
 import { Dashboard } from "../screens/Dashboard"
 import { Register } from "../screens/Register"
@@ -7,10 +13,53 @@ export const AppRoutes = () => {
   const { Navigator, Screen } = createBottomTabNavigator()
 
   return (
-    <Navigator>
-      <Screen name="Listagem" component={Dashboard} />
-      <Screen name="Cadastrar" component={Register} />
-      <Screen name="Resumo" component={Register} />
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: theme.colors.secondary,
+        tabBarInactiveTintColor: theme.colors.text,
+        tabBarLabelPosition: "beside-icon",
+        tabBarLabelStyle: {
+          fontFamily: theme.fonts.medium,
+          fontSize: 14,
+        },
+        tabBarStyle: {
+          height: 72 + getBottomSpace(),
+          paddingVertical: Platform.OS === "ios" ? 20 : 0,
+        },
+      }}
+    >
+      <Screen
+        name="Listagem"
+        component={Dashboard}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons
+              name="format-list-bulleted"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Screen
+        name="Cadastrar"
+        component={Register}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name="attach-money" color={color} size={size} />
+          ),
+        }}
+      />
+      <Screen
+        name="Resumo"
+        component={Register}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name="pie-chart" color={color} size={size} />
+          ),
+        }}
+      />
     </Navigator>
   )
 }
