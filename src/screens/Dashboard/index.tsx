@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import {
   Container,
@@ -22,47 +22,100 @@ import {
   TransactionCard,
   TransactionCardData,
 } from "../../components/TransactionCard"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useFocusEffect } from "@react-navigation/native"
 
-export interface DataListListProps extends TransactionCardData {
+export interface DataListProps extends TransactionCardData {
   id: string
 }
 
+interface HighlightDataProps {
+  amount: string
+}
+
+interface HighlightData {
+  deposits: HighlightDataProps
+  withDraws: HighlightDataProps
+  total: HighlightDataProps
+}
+
 export const Dashboard = () => {
-  const DATA: DataListListProps[] = [
-    {
-      id: "1",
-      type: "deposit",
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: {
-        name: "Vendas",
-        icon: "dollar-sign",
+  const [transactions, setTransactions] = useState<DataListProps[]>([])
+  const [highlightData, setHighlightData] = useState<HighlightData>(
+    {} as HighlightData
+  )
+  const loadTransactions = async () => {
+    const response = await AsyncStorage.getItem("@gofinances:transactions")
+
+    const transactions: [] = response ? JSON.parse(response) : []
+
+    let deposit = 0
+    let withDraw = 0
+    let total = 0
+
+    const dataFormatted: DataListProps[] = transactions.map(
+      (item: DataListProps) => {
+        if (item.type === "deposit") {
+          deposit += Number(item.amount)
+          total += Number(item.amount)
+        } else {
+          withDraw += Number(item.amount)
+          total -= Number(item.amount)
+        }
+
+        const amount = Number(item.amount).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+
+        const dateFormatted = Intl.DateTimeFormat("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }).format(new Date(item.date))
+
+        return {
+          id: item.id,
+          type: item.type,
+          name: item.name,
+          amount,
+          date: dateFormatted,
+          category: item.category,
+        }
+      }
+    )
+    setTransactions(dataFormatted)
+    setHighlightData({
+      deposits: {
+        amount: deposit.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
       },
-      date: "13/04/2021",
-    },
-    {
-      id: "2",
-      type: "withdraw",
-      title: "Mercado",
-      amount: "R$ 2.000,00",
-      category: {
-        name: "Alimentação",
-        icon: "coffee",
+      withDraws: {
+        amount: withDraw.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
       },
-      date: "13/04/2021",
-    },
-    {
-      id: "3",
-      type: "withdraw",
-      title: "Fones de ouvido",
-      amount: "R$ 1.000,00",
-      category: {
-        name: "Equipamento",
-        icon: "headphones",
+      total: {
+        amount: total.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
       },
-      date: "13/04/2021",
-    },
-  ]
+    })
+  }
+
+  useEffect(() => {
+    loadTransactions()
+  }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTransactions()
+    }, [])
+  )
 
   return (
     <Container>
@@ -86,19 +139,19 @@ export const Dashboard = () => {
           type="up"
           title="Entradas"
           lastTransaction="Última entrada dia 13 de abril"
-          amount="R$ 17.400,00"
+          amount={highlightData.deposits.amount}
         />
         <HighlightCard
           type="down"
           title="Saídas"
           lastTransaction="Última entrada dia 13 de abril"
-          amount="R$ 17.400,00"
+          amount={highlightData.withDraws.amount}
         />
         <HighlightCard
           type="total"
           title="Total"
           lastTransaction="Última entrada dia 13 de abril"
-          amount="R$ 17.400,00"
+          amount={highlightData.total.amount}
         />
       </HighlightCards>
 
@@ -106,7 +159,7 @@ export const Dashboard = () => {
         <Title>Listagem</Title>
 
         <TransactionList
-          data={DATA}
+          data={transactions}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
         />

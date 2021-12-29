@@ -1,4 +1,5 @@
 import React from "react"
+import { categories } from "../../utils/categories"
 
 import {
   Container,
@@ -11,15 +12,11 @@ import {
   CategoryContainer,
 } from "./styles"
 
-interface CategoryProps {
-  name: string
-  icon: string
-}
 export interface TransactionCardData {
   type: "deposit" | "withdraw"
-  title: string
+  name: string
   amount: string
-  category: CategoryProps
+  category: string
   date: string
 }
 
@@ -28,16 +25,17 @@ interface Props {
 }
 
 export const TransactionCard = ({ data }: Props) => {
+  const category = categories.filter((item) => item.key === data.category)[0]
   return (
     <Container>
-      <Title>{data.title}</Title>
+      <Title>{data.name}</Title>
       <Amount type={data.type}>
         {data.type === "deposit" ? data.amount : "-" + data.amount}
       </Amount>
       <Footer>
         <CategoryContainer>
-          <Icon name={data.category.icon} />
-          <Category>{data.category.name}</Category>
+          <Icon name={category.icon} />
+          <Category>{category.name}</Category>
         </CategoryContainer>
         <Date>{data.date}</Date>
       </Footer>
