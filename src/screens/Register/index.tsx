@@ -126,16 +126,6 @@ export const Register = () => {
     }
   }
 
-  useEffect(() => {
-    const getTransactions = async () => {
-      const data = await AsyncStorage.getItem("@gofinances:transactions")
-
-      console.log(JSON.parse(data!))
-      // await AsyncStorage.removeItem(dataKey)
-    }
-    getTransactions()
-  }, [])
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
