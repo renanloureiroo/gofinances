@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react"
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native"
 
+import uuid from "react-native-uuid"
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 import { useForm } from "react-hook-form"
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
@@ -55,10 +62,13 @@ export const Register = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   })
+
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation()
 
   const handleSelectCategory = ({ key, name }: CategoryProps) => {
     setCategory({ key, name })
@@ -83,16 +93,32 @@ export const Register = () => {
     if (category.key === "category") {
       Alert.alert("Selecione uma categoria")
     }
-
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       type: selected,
       category: category.key,
+      date: new Date(),
     }
 
     try {
-      await AsyncStorage.setItem(dataKey, JSON.stringify(data))
+      const data = await AsyncStorage.getItem("@gofinances:transactions")
+
+      const currentData = data ? JSON.parse(data) : []
+
+      const dataFormatted = [...currentData, newTransaction]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted))
+
+      setSelected("withdraw")
+      setCategory({
+        key: "category",
+        name: "Category",
+      })
+      reset()
+
+      navigate("Listagem")
     } catch (err) {
       console.error("screen:Register\nmetódo:HandleRegister\nerror", err)
       Alert.alert("Não foi possível salvar")
@@ -104,6 +130,7 @@ export const Register = () => {
       const data = await AsyncStorage.getItem("@gofinances:transactions")
 
       console.log(JSON.parse(data!))
+      // await AsyncStorage.removeItem(dataKey)
     }
     getTransactions()
   }, [])
