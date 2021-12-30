@@ -24,4 +24,12 @@ export const Title = styled.Text`
 export const Content = styled.View`
   flex: 1;
   padding: 20px 24px;
+
+  align-items: center;
+`
+
+export const ChartContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `
