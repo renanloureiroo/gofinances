@@ -10,6 +10,7 @@ import { Container, Header, Title, Content, ChartContainer } from "./styles"
 import { categories } from "../../utils/categories"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "styled-components"
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"
 
 interface TransactionData {
   type: "deposit" | "withdraw"
@@ -85,7 +86,13 @@ export const Resume = () => {
       <Header>
         <Title>Resumo por categoria</Title>
       </Header>
-      <Content>
+      <Content
+        showsVerticalScrollIndicator={false}
+        style={{
+          paddingHorizontal: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
         <ChartContainer>
           <VictoryPie
             data={totalByCategory}

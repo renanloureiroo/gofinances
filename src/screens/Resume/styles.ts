@@ -21,11 +21,8 @@ export const Title = styled.Text`
   margin-bottom: 19px;
 `
 
-export const Content = styled.View`
+export const Content = styled.ScrollView`
   flex: 1;
-  padding: 20px 24px;
-
-  align-items: center;
 `
 
 export const ChartContainer = styled.View`
