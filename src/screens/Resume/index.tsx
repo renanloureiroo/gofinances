@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { VictoryPie } from "victory-native"
+import { addMonths, format } from "date-fns"
+
+import { ptBR } from "date-fns/locale"
 
 import { HistoryCard } from "../../components/HistoryCard"
 
@@ -40,15 +43,27 @@ interface CategoryData {
 
 export const Resume = () => {
   const [totalByCategory, setTotalByCategory] = useState<CategoryData[]>([])
+  const [selectDate, setSelectDate] = useState<Date>(new Date())
 
   const theme = useTheme()
+
+  const handleSelectDate = (action: "next" | "prev") => {
+    if (action == "next") {
+      setSelectDate((oldDate) => addMonths(oldDate, 1))
+    } else {
+      setSelectDate((oldDate) => addMonths(oldDate, -1))
+    }
+  }
 
   const loadData = async () => {
     const response = await AsyncStorage.getItem("@gofinances:transactions")
     const responseFormatted: [] = response ? JSON.parse(response) : []
 
     const expensives = responseFormatted.filter(
-      (transaction: TransactionData) => transaction.type === "withdraw"
+      (transaction: TransactionData) =>
+        transaction.type === "withdraw" &&
+        new Date(transaction.date).getMonth() === selectDate.getMonth() &&
+        new Date(transaction.date).getFullYear() === selectDate.getFullYear()
     )
     const expensivesTotal = expensives.reduce(
       (acumullator: number, expensive: TransactionData) => {
@@ -87,10 +102,13 @@ export const Resume = () => {
 
     setTotalByCategory(totalByCategory)
   }
+  useEffect(() => {
+    console.log(selectDate)
+  }, [selectDate])
 
   useEffect(() => {
     loadData()
-  })
+  }, [selectDate])
   return (
     <Container>
       <Header>
@@ -104,13 +122,15 @@ export const Resume = () => {
         }}
       >
         <MonthContainer>
-          <MonthButton>
+          <MonthButton onPress={() => handleSelectDate("prev")}>
             <MonthSelect name="chevron-left" />
           </MonthButton>
 
-          <MonthTitle>Maio, 2020</MonthTitle>
+          <MonthTitle>
+            {format(selectDate, "MMMM, yyyy", { locale: ptBR })}
+          </MonthTitle>
 
-          <MonthButton>
+          <MonthButton onPress={() => handleSelectDate("next")}>
             <MonthSelect name="chevron-right" />
           </MonthButton>
         </MonthContainer>
