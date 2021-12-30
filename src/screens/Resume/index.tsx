@@ -6,7 +6,17 @@ import { VictoryPie } from "victory-native"
 
 import { HistoryCard } from "../../components/HistoryCard"
 
-import { Container, Header, Title, Content, ChartContainer } from "./styles"
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  ChartContainer,
+  MonthContainer,
+  MonthSelect,
+  MonthTitle,
+  MonthButton,
+} from "./styles"
 import { categories } from "../../utils/categories"
 import { RFValue } from "react-native-responsive-fontsize"
 import { useTheme } from "styled-components"
@@ -93,6 +103,17 @@ export const Resume = () => {
           paddingBottom: useBottomTabBarHeight(),
         }}
       >
+        <MonthContainer>
+          <MonthButton>
+            <MonthSelect name="chevron-left" />
+          </MonthButton>
+
+          <MonthTitle>Maio, 2020</MonthTitle>
+
+          <MonthButton>
+            <MonthSelect name="chevron-right" />
+          </MonthButton>
+        </MonthContainer>
         <ChartContainer>
           <VictoryPie
             data={totalByCategory}
