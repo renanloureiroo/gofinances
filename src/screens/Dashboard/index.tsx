@@ -71,76 +71,97 @@ export const Dashboard = () => {
   }
 
   const loadTransactions = async () => {
-    const response = await AsyncStorage.getItem("@gofinances:transactions")
+    try {
+      const response = await AsyncStorage.getItem("@gofinances:transactions")
 
-    const transactions: [] = response ? JSON.parse(response) : []
+      const transactions: [] = response ? JSON.parse(response) : []
 
-    let deposit = 0
-    let withDraw = 0
+      if (transactions.length > 0) {
+        let deposit = 0
+        let withDraw = 0
 
-    const dataFormatted: DataListProps[] = transactions.map(
-      (item: DataListProps) => {
-        if (item.type === "deposit") {
-          deposit += Number(item.amount)
-        } else {
-          withDraw += Number(item.amount)
-        }
+        const dataFormatted: DataListProps[] = transactions.map(
+          (item: DataListProps) => {
+            if (item.type === "deposit") {
+              deposit += Number(item.amount)
+            } else {
+              withDraw += Number(item.amount)
+            }
 
-        const amount = Number(item.amount).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
+            const amount = Number(item.amount).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })
+
+            const dateFormatted = Intl.DateTimeFormat("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            }).format(new Date(item.date))
+
+            return {
+              id: item.id,
+              type: item.type,
+              name: item.name,
+              amount,
+              date: dateFormatted,
+              category: item.category,
+            }
+          }
+        )
+
+        setTransactions(dataFormatted)
+
+        const total = deposit - withDraw
+
+        const lastDeposit = getLastDate(transactions, "deposit")
+        const lastWithDraw = getLastDate(transactions, "withdraw")
+        const totalInterval = `01 a ${lastWithDraw}`
+
+        setHighlightData({
+          deposits: {
+            amount: deposit.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+            lastTransaction: "Última entrada dia " + lastDeposit,
+          },
+          withDraws: {
+            amount: withDraw.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+            lastTransaction: "Última saída dia " + lastWithDraw,
+          },
+          total: {
+            amount: total.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+            lastTransaction: totalInterval,
+          },
         })
-
-        const dateFormatted = Intl.DateTimeFormat("pt-BR", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }).format(new Date(item.date))
-
-        return {
-          id: item.id,
-          type: item.type,
-          name: item.name,
-          amount,
-          date: dateFormatted,
-          category: item.category,
-        }
+      } else {
+        setHighlightData({
+          deposits: {
+            amount: "R$ 0",
+            lastTransaction: "",
+          },
+          withDraws: {
+            amount: "R$ 0",
+            lastTransaction: "",
+          },
+          total: {
+            amount: "R$ 0",
+            lastTransaction: "",
+          },
+        })
       }
-    )
 
-    setTransactions(dataFormatted)
-
-    const total = deposit - withDraw
-
-    const lastDeposit = getLastDate(transactions, "deposit")
-    const lastWithDraw = getLastDate(transactions, "withdraw")
-    const totalInterval = `01 a ${lastWithDraw}`
-
-    setHighlightData({
-      deposits: {
-        amount: deposit.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
-        lastTransaction: "Última entrada dia " + lastDeposit,
-      },
-      withDraws: {
-        amount: withDraw.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
-        lastTransaction: "Última saída dia " + lastWithDraw,
-      },
-      total: {
-        amount: total.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
-        lastTransaction: totalInterval,
-      },
-    })
-
-    setIsLoading(false)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {

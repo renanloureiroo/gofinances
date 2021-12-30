@@ -8,6 +8,7 @@ import theme from "../global/styles/theme"
 
 import { Dashboard } from "../screens/Dashboard"
 import { Register } from "../screens/Register"
+import { Resume } from "../screens/Resume"
 
 export const AppRoutes = () => {
   const { Navigator, Screen } = createBottomTabNavigator()
@@ -53,7 +54,7 @@ export const AppRoutes = () => {
       />
       <Screen
         name="Resumo"
-        component={Register}
+        component={Resume}
         options={{
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="pie-chart" color={color} size={size} />

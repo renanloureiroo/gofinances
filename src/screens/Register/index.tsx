@@ -169,7 +169,11 @@ export const Register = () => {
             />
           </Fields>
 
-          <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
+          <Button
+            title="Cadastrar"
+            onPress={handleSubmit(handleRegister)}
+            rippleColor="#fff"
+          />
         </Form>
 
         <Modal visible={categoryModalOpen}>
