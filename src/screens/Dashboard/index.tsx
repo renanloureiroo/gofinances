@@ -164,11 +164,6 @@ export const Dashboard = () => {
     }
   }
 
-  useEffect(() => {
-    loadTransactions()
-    // AsyncStorage.removeItem("@gofinances:transactions")
-  }, [])
-
   useFocusEffect(
     useCallback(() => {
       loadTransactions()
