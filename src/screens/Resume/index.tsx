@@ -40,7 +40,7 @@ interface CategoryData {
   total: number
   totalFormatted: string
   color: string
-  percent: string
+  label: string
 }
 
 export const Resume = () => {
@@ -99,7 +99,7 @@ export const Resume = () => {
           total: totalSum,
           totalFormatted,
           color: category.color,
-          percent,
+          label: percent,
         })
       }
     })
@@ -147,8 +147,8 @@ export const Resume = () => {
           <ChartContainer>
             <VictoryPie
               data={totalByCategory}
-              x="percent"
-              y="total"
+              x={(data) => data.label}
+              y={(data) => data.total}
               style={{
                 labels: {
                   fontSize: RFValue(18),
