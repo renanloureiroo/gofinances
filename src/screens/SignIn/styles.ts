@@ -36,15 +36,11 @@ export const Footer = styled.View`
   width: 100%;
   height: 30%;
   background: ${({ theme }) => theme.colors.secondary};
-
-  position: relative;
 `
 
 export const ButtonsContainer = styled.View`
   width: 100%;
   padding: 0 32px;
 
-  position: absolute;
-
-  top: -${RFValue(28)}px;
+  margin-top: ${RFValue(-28)}px;
 `

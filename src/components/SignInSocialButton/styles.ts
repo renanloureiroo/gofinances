@@ -15,8 +15,7 @@ export const Container = styled(RectButton)`
 export const ImageContainer = styled.View`
   justify-content: center;
   align-items: center;
-  width: ${RFValue(56)}px;
-  height: ${RFValue(56)}px;
+  padding: ${RFValue(16)}px;
   border-right-width: 1px;
   border-right-color: ${({ theme }) => theme.colors.background};
 `
