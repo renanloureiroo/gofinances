@@ -17,9 +17,9 @@ import { SignInSocialButton } from "../../components/SignInSocialButton"
 import { useAuth } from "../../hooks/useAuth"
 
 export const SignIn = () => {
-  const context = useAuth()
+  const { user } = useAuth()
 
-  console.log(context)
+  console.log(user)
   return (
     <Container>
       <Header>
