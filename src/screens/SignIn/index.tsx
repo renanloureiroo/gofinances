@@ -14,8 +14,12 @@ import Logo from "../../assets/logo.svg"
 import Apple from "../../assets/apple.svg"
 import Google from "../../assets/google.svg"
 import { SignInSocialButton } from "../../components/SignInSocialButton"
+import { useAuth } from "../../hooks/useAuth"
 
 export const SignIn = () => {
+  const context = useAuth()
+
+  console.log(context)
   return (
     <Container>
       <Header>
