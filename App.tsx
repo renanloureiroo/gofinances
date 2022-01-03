@@ -37,9 +37,9 @@ export default function App() {
         <StatusBar style="light" translucent />
         <NavigationContainer>
           <AuthContextProvider>
-            {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
-            <SignIn />
-            {/* </GestureHandlerRootView> */}
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <SignIn />
+            </GestureHandlerRootView>
           </AuthContextProvider>
         </NavigationContainer>
       </ThemeProvider>
