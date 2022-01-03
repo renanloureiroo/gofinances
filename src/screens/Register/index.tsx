@@ -28,6 +28,7 @@ import {
   RadioContainer,
   Fields,
 } from "./styles"
+import { useAuth } from "../../hooks/useAuth"
 
 interface CategoryProps {
   key: string
@@ -58,7 +59,7 @@ export const Register = () => {
     name: "Category",
   })
 
-  const dataKey = "@gofinances:transactions"
+  const { user } = useAuth()
 
   const {
     control,
@@ -104,7 +105,8 @@ export const Register = () => {
     }
 
     try {
-      const data = await AsyncStorage.getItem("@gofinances:transactions")
+      const dataKey = `@gofinances:transactions_user:${user?.id}`
+      const data = await AsyncStorage.getItem(dataKey)
 
       const currentData = data ? JSON.parse(data) : []
 
