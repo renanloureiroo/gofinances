@@ -31,13 +31,10 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
 
   const signInWithGoogle = async () => {
     try {
-      const CLIENT_ID =
-        "764086455224-27dia6rp5mjjmqffjonrd80ojdv56tn2.apps.googleusercontent.com"
-      const REDIRECT_URI = "https://auth.expo.io/@iugui/gofinances"
       const RESPONSE_TYPE = "token"
       const SCOPE = encodeURI("profile email")
 
-      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`
 
       const { type, params } = (await AuthSession.startAsync({
         authUrl,
@@ -52,7 +49,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
         const user: User = {
           id: userInfo.id,
           email: userInfo.email,
-          name: userInfo.name,
+          name: userInfo.given_name,
           photo: userInfo.picture,
         }
 
