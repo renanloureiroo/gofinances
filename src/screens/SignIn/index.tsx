@@ -18,7 +18,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { Alert } from "react-native"
 
 export const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const { signInWithGoogle, signInWithApple } = useAuth()
 
   const handleSignInWithGoogle = async () => {
