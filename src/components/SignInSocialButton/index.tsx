@@ -9,13 +9,13 @@ import { useTheme } from "styled-components"
 interface Props extends RectButtonProps {
   title: string
   svg: React.FC<SvgProps>
-  loading: boolean
+  loading?: boolean
 }
 
 export const SignInSocialButton = ({
   title,
   svg: Svg,
-  loading,
+  loading = false,
   ...rest
 }: Props) => {
   const theme = useTheme()
