@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
 
 import { ActivityIndicator } from "react-native"
 
@@ -28,6 +28,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useFocusEffect } from "@react-navigation/native"
 import { useTheme } from "styled-components"
+import { useAuth } from "../../hooks/useAuth"
 
 export interface DataListProps extends TransactionCardData {
   id: string
@@ -50,6 +51,8 @@ export const Dashboard = () => {
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData
   )
+
+  const { user, SignOut } = useAuth()
 
   const theme = useTheme()
 
@@ -181,15 +184,13 @@ export const Dashboard = () => {
           <Header>
             <UserWrapper>
               <UserInfo>
-                <Photo
-                  source={{ uri: "https://github.com/renanloureiroo.png" }}
-                />
+                <Photo source={{ uri: user?.photo }} />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Renan</UserName>
+                  <UserName>{user?.name}</UserName>
                 </User>
               </UserInfo>
-              <LogOutButton onPress={() => {}}>
+              <LogOutButton onPress={SignOut}>
                 <Icon name="power" />
               </LogOutButton>
             </UserWrapper>

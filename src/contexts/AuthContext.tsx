@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from "react"
+import React, { createContext, ReactNode, useEffect, useState } from "react"
 import * as AuthSession from "expo-auth-session"
 import * as AppleAuthentication from "expo-apple-authentication"
 
@@ -19,6 +19,7 @@ interface IAuthContextData {
   user: User | null
   signInWithGoogle: () => Promise<void>
   signInWithApple: () => Promise<void>
+  SignOut: () => Promise<void>
 }
 
 interface AuthorizationResponse {
@@ -35,7 +36,9 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
   const REDIRECT_URI = process.env.REDIRECT_URI
   const [user, setUser] = useState<User | null>(null)
 
-  const signInWithGoogle = async () => {
+  const [rehydrating, setRehydrating] = useState(true)
+
+  const signInWithGoogle = async (): Promise<void> => {
     try {
       const RESPONSE_TYPE = "token"
       const SCOPE = encodeURI("profile email")
@@ -67,7 +70,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     }
   }
 
-  const signInWithApple = async () => {
+  const signInWithApple = async (): Promise<void> => {
     try {
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
@@ -92,12 +95,32 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     }
   }
 
+  const SignOut = async (): Promise<void> => {
+    await AsyncStorage.removeItem("@gofinances:user")
+    setUser(null)
+  }
+
+  useEffect(() => {
+    const loadUser = async (): Promise<void> => {
+      const response = await AsyncStorage.getItem("@gofinances:user")
+      if (response) {
+        const user = JSON.parse(response)
+
+        setUser(user)
+      }
+      setRehydrating(false)
+    }
+
+    loadUser()
+  }, [])
+
   return (
     <AuthContext.Provider
       value={{
         user,
         signInWithGoogle,
         signInWithApple,
+        SignOut,
       }}
     >
       {children}
