@@ -21,7 +21,6 @@ export const SignIn = () => {
   const { signInWithGoogle } = useAuth()
 
   const handleSignInWithGoogle = async () => {
-    console.log("chamou")
     try {
       await signInWithGoogle()
     } catch (error) {
