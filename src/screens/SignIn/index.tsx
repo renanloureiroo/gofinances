@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { RFValue } from "react-native-responsive-fontsize"
 
 import {
@@ -18,23 +18,30 @@ import { useAuth } from "../../hooks/useAuth"
 import { Alert } from "react-native"
 
 export const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const { signInWithGoogle, signInWithApple } = useAuth()
 
   const handleSignInWithGoogle = async () => {
     try {
-      await signInWithGoogle()
+      setIsLoading(true)
+      return await signInWithGoogle()
     } catch (error) {
       console.log(error)
       Alert.alert("Não foi possível conectar a conta Google")
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const handleSignInWithApple = async () => {
     try {
-      await signInWithApple()
+      setIsLoading(true)
+      return await signInWithApple()
     } catch (error) {
       console.log(error)
       Alert.alert("Não foi possível conectar a conta Apple")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -53,11 +60,13 @@ export const SignIn = () => {
             title="Entrar com Google"
             svg={Google}
             onPress={handleSignInWithGoogle}
+            loading={isLoading}
           />
           <SignInSocialButton
             title="Entrar com Apple"
             svg={Apple}
             onPress={handleSignInWithApple}
+            loading={isLoading}
           />
         </ButtonsContainer>
       </Footer>

@@ -12,6 +12,13 @@ export const Container = styled(RectButton)`
   margin-bottom: 16px;
 `
 
+export const Content = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: ${RFValue(56)}px;
+`
+
 export const ImageContainer = styled.View`
   justify-content: center;
   align-items: center;
