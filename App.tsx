@@ -20,8 +20,8 @@ import theme from "./src/global/styles/theme"
 
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
-import { SignIn } from "./src/screens/SignIn"
 import { AuthContextProvider } from "./src/contexts/AuthContext"
+import { useAuth } from "./src/hooks/useAuth"
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -29,7 +29,9 @@ export default function App() {
     Poppins_400Regular,
     Poppins_700Bold,
   })
-  if (!fontsLoaded) {
+
+  const { rehydrating } = useAuth()
+  if (!fontsLoaded || rehydrating) {
     return <AppLoading />
   } else {
     return (

@@ -20,6 +20,7 @@ interface IAuthContextData {
   signInWithGoogle: () => Promise<void>
   signInWithApple: () => Promise<void>
   SignOut: () => Promise<void>
+  rehydrating: boolean
 }
 
 interface AuthorizationResponse {
@@ -118,6 +119,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
     <AuthContext.Provider
       value={{
         user,
+        rehydrating,
         signInWithGoogle,
         signInWithApple,
         SignOut,
