@@ -1,5 +1,8 @@
 import React, { createContext, ReactNode, useState } from "react"
 import * as AuthSession from "expo-auth-session"
+import * as AppleAuthentication from "expo-apple-authentication"
+
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 interface AuthContextProps {
   children: ReactNode
@@ -15,6 +18,7 @@ interface User {
 interface IAuthContextData {
   user: User | null
   signInWithGoogle: () => Promise<void>
+  signInWithApple: () => Promise<void>
 }
 
 interface AuthorizationResponse {
@@ -56,7 +60,32 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
         }
 
         setUser(user)
-        console.log(user)
+        await AsyncStorage.setItem("@gofinances:user", JSON.stringify(user))
+      }
+    } catch (err) {
+      throw new Error(err as string)
+    }
+  }
+
+  const signInWithApple = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      })
+
+      if (credential) {
+        const user: User = {
+          id: String(credential.user),
+          email: credential.email!,
+          name: credential.fullName!.givenName!,
+          photo: undefined,
+        }
+
+        setUser(user)
+        await AsyncStorage.setItem("@gofinances:user", JSON.stringify(user))
       }
     } catch (err) {
       throw new Error(err as string)
@@ -68,6 +97,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
       value={{
         user,
         signInWithGoogle,
+        signInWithApple,
       }}
     >
       {children}
