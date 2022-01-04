@@ -24,9 +24,9 @@ Gofinances é uma app para o gerenciamento das finanças, que disponibiliza um g
 
 ## Screenshot
 <div align="center">
-  <img src='./github/signIn.png' width="400px"/ >
-  <img src='./github/home.png' width="400px"/>
-  <img src='./github/register.png' width="400px"/>
-  <img src='./github/categories.png' width="400px"/>
-  <img src='./github/resume.png' width="400px"/>
+  <img src='./github/signIn.png' width="300px"/ >
+  <img src='./github/home.png' width="300px"/>
+  <img src='./github/register.png' width="300px"/>
+  <img src='./github/categories.png' width="300px"/>
+  <img src='./github/resume.png' width="300px"/>
 </div>
