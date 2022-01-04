@@ -16,17 +16,17 @@ Gofinances é uma app para o gerenciamento das finanças, que disponibiliza um g
 
 #### Projeto desenvolvido durante o programa ignite, no chapter II da trilha de React Native.
 
-## 🚀 Technologies
+# 🚀 Technologies
 * [Typescript](https://www.typescriptlang.org/)
 * [React Native](https://reactnative.dev/)
 * [Expo](https://docs.expo.dev/)
 * [Styled Components](https://styled-components.com/)
 
 ## Screenshot
-
-![image](github/signIn.png)
-![image](github/home.png)
-![image](github/register.png)
-![image](github/categories.png)
-![image](github/resume.png)
-
+<div align="center">
+  <img src='./github/signIn.png' width="400px"/ >
+  <img src='./github/home.png' width="400px"/>
+  <img src='./github/register.png' width="400px"/>
+  <img src='./github/categories.png' width="400px"/>
+  <img src='./github/resume.png' width="400px"/>
+</div>
