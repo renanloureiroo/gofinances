@@ -16,13 +16,24 @@ Gofinances é uma app para o gerenciamento das finanças, que disponibiliza um g
 
 #### Projeto desenvolvido durante o programa ignite, no chapter II da trilha de React Native.
 
-# 🚀 Technologies
+
+## 📌 Contents
+- [Sobre o projeto](#sobre-o-projeto)
+    - [Projeto desenvolvido durante o programa ignite, no chapter II da trilha de React Native.](#projeto-desenvolvido-durante-o-programa-ignite-no-chapter-ii-da-trilha-de-react-native)
+- [📌 Contents](#-contents)
+- [🚀 Technologies](#-technologies)
+- [📷 Screenshot](#-screenshot)
+- [💻 How to run](#-how-to-run)
+- [License](#license)
+  
+
+## 🚀 Technologies
 * [Typescript](https://www.typescriptlang.org/)
 * [React Native](https://reactnative.dev/)
 * [Expo](https://docs.expo.dev/)
 * [Styled Components](https://styled-components.com/)
 
-## Screenshot
+## 📷 Screenshot
 <div align="center">
   <img src='./github/signIn.png' width="300px"/ >
   <img src='./github/home.png' width="300px"/>
@@ -30,3 +41,22 @@ Gofinances é uma app para o gerenciamento das finanças, que disponibiliza um g
   <img src='./github/categories.png' width="300px"/>
   <img src='./github/resume.png' width="300px"/>
 </div>
+
+
+
+## 💻 How to run
+```
+  # Clone Repository
+  $ git clone https://github.com/renanloureiroo/gofinances.git
+```
+
+```
+  # Install Dependencies
+  $ yarn 
+
+  # Run application
+  $ expo start
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
