@@ -21,3 +21,11 @@ test("checks is user data has been loaded", () => {
 
   expect(inputSurname.props.value).toEqual("Loureiro")
 })
+
+test("checks if title render correctly", () => {
+  const { getByTestId } = render(<Profile />)
+
+  const textTitle = getByTestId("text-title")
+
+  expect(textTitle.props.children).toContain("Perfil")
+})
