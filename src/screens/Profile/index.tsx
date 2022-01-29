@@ -6,8 +6,17 @@ export const Profile = () => {
     <View>
       <Text>Perfil</Text>
 
-      <TextInput placeholder="Nome" autoCorrect={false} />
-      <TextInput placeholder="Sobrenome" />
+      <TextInput
+        testID="input-name"
+        value="Renan"
+        placeholder="Nome"
+        autoCorrect={false}
+      />
+      <TextInput
+        testID="input-surname"
+        value="Loureiro"
+        placeholder="Sobrenome"
+      />
 
       <Button title="Salvar" onPress={() => {}} />
     </View>
