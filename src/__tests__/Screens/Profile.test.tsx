@@ -4,28 +4,30 @@ import { render } from "@testing-library/react-native"
 
 import { Profile } from "../../screens/Profile"
 
-test("check if show correctly user input name placeholder", () => {
-  const { getByPlaceholderText } = render(<Profile />)
-  const inputName = getByPlaceholderText("Nome")
+describe("Profile", () => {
+  it("should have placeholder correctly in user name input  ", () => {
+    const { getByPlaceholderText } = render(<Profile />)
+    const inputName = getByPlaceholderText("Nome")
 
-  expect(inputName.props.placeholder).toBeTruthy()
-})
+    expect(inputName.props.placeholder).toBeTruthy()
+  })
 
-test("checks is user data has been loaded", () => {
-  const { getByTestId } = render(<Profile />)
+  it(" should be loaded user data", () => {
+    const { getByTestId } = render(<Profile />)
 
-  const inputName = getByTestId("input-name")
-  const inputSurname = getByTestId("input-surname")
+    const inputName = getByTestId("input-name")
+    const inputSurname = getByTestId("input-surname")
 
-  expect(inputName.props.value).toEqual("Renan")
+    expect(inputName.props.value).toEqual("Renan")
 
-  expect(inputSurname.props.value).toEqual("Loureiro")
-})
+    expect(inputSurname.props.value).toEqual("Loureiro")
+  })
 
-test("checks if title render correctly", () => {
-  const { getByTestId } = render(<Profile />)
+  it("should exist title correctly", () => {
+    const { getByTestId } = render(<Profile />)
 
-  const textTitle = getByTestId("text-title")
+    const textTitle = getByTestId("text-title")
 
-  expect(textTitle.props.children).toContain("Perfil")
+    expect(textTitle.props.children).toContain("Perfil")
+  })
 })
