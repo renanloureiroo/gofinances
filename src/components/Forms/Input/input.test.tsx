@@ -24,7 +24,6 @@ describe("Input component", () => {
         wrapper: Providers,
       }
     )
-    debug()
     const inputComponent = getByTestId("input-email")
 
     expect(inputComponent.props.style[0].borderColor).toEqual(
