@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native"
 
 import uuid from "react-native-uuid"
@@ -6,7 +6,7 @@ import uuid from "react-native-uuid"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
-import { useForm } from "react-hook-form"
+import { useForm, FieldValues } from "react-hook-form"
 import {
   useNavigation,
   NavigationProp,
@@ -91,7 +91,7 @@ export const Register = () => {
     setSelected("withdraw")
   }
 
-  const handleRegister = async (form: FormData) => {
+  const handleRegister = async (form: FieldValues) => {
     if (category.key === "category") {
       Alert.alert("Selecione uma categoria")
     }
@@ -173,12 +173,12 @@ export const Register = () => {
 
           <Button
             title="Cadastrar"
-            onPress={handleSubmit(handleRegister)}
+            onPress={() => handleSubmit(handleRegister)}
             rippleColor="#fff"
           />
         </Form>
 
-        <Modal visible={categoryModalOpen}>
+        <Modal testID="modal-category" visible={categoryModalOpen}>
           <CategorySelect
             category={category}
             setCategory={handleSelectCategory}
