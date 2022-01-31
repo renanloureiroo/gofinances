@@ -16,7 +16,7 @@ interface User {
 }
 
 interface IAuthContextData {
-  user: User | null
+  user: User
   signInWithGoogle: () => Promise<void>
   signInWithApple: () => Promise<void>
   SignOut: () => Promise<void>
@@ -35,7 +35,7 @@ export const AuthContext = createContext({} as IAuthContextData)
 export const AuthContextProvider = ({ children }: AuthContextProps) => {
   const CLIENT_ID = process.env.CLIENT_ID
   const REDIRECT_URI = process.env.REDIRECT_URI
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User>({} as User)
 
   const [rehydrating, setRehydrating] = useState(true)
 
@@ -103,7 +103,7 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
 
   const SignOut = async (): Promise<void> => {
     await AsyncStorage.removeItem("@gofinances:user")
-    setUser(null)
+    setUser({} as User)
   }
 
   useEffect(() => {

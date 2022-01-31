@@ -10,7 +10,7 @@ export const Routes = () => {
   const { user } = useAuth()
   return (
     <NavigationContainer>
-      {!user ? <AuthRoutes /> : <AppRoutes />}
+      {!user.id ? <AuthRoutes /> : <AppRoutes />}
     </NavigationContainer>
   )
 }
