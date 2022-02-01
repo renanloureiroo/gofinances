@@ -166,6 +166,7 @@ export const Register = () => {
             </RadioContainer>
 
             <CategorySelectButton
+              testID="button-category"
               title={category.name}
               onPress={handleOpenModal}
             />

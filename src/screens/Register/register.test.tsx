@@ -1,6 +1,6 @@
 import React from "react"
 
-import { render } from "@testing-library/react-native"
+import { render, fireEvent } from "@testing-library/react-native"
 import { Register } from "."
 import { ThemeProvider } from "styled-components/native"
 import theme from "../../global/styles/theme"
@@ -15,7 +15,11 @@ describe("Register Screen", () => {
       wrapper: Providers,
     })
 
+    const categoryButton = getByTestId("button-category")
     const categoryModal = getByTestId("modal-category")
-    expect(categoryModal.props.visible).toBe(false)
+
+    fireEvent.press(categoryButton)
+
+    expect(categoryModal.props.visible).toBeTruthy()
   })
 })
