@@ -1,7 +1,6 @@
 import { AuthContextProvider } from "./AuthContext"
 import { useAuth } from "../hooks/useAuth"
 
-import { startAsync } from "expo-auth-session"
 import { renderHook, act } from "@testing-library/react-hooks"
 
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -51,5 +50,17 @@ describe("Auth Hook ", () => {
     await act(() => result.current.signInWithGoogle())
 
     expect(result.current.user.id).toBe(undefined)
+  })
+
+  it("should be error in sign-in with Google", async () => {
+    const { result } = renderHook(() => useAuth(), {
+      wrapper: AuthContextProvider,
+    })
+
+    try {
+      await act(() => result.current.signInWithGoogle())
+    } catch {
+      expect(result.current.user).toEqual({})
+    }
   })
 })
