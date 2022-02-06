@@ -8,12 +8,20 @@
       "backgroundColor": "#5636D3"
     },
     "icon": "./src/assets/icon.png",
-  
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.gofinances",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.gofinances",
+      "versionCode": 1
+    },
+    "description": "",
+    "githubUrl": "https://github.com/renanloureiroo/gofinances"
   },
   "name": "gofinances"
-
 }
